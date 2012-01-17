@@ -1,0 +1,36 @@
+= form_for(@account,:html => { :class =>'data-form' }) do |f|
+  - if @account.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@account.errors.count, "error")
+        prohibited this account from being saved:
+      %ul
+        - @account.errors.full_messages.each do |msg|
+          %li= msg
+  = f.fields_for :users_attributes do |user|
+    .field
+      = user.label :name
+      = user.text_field :name
+    .field
+      = user.label :email
+      = user.email_field :email
+    .field
+      = user.label :password
+      = user.password_field :password
+    .field
+      = user.label :password_confirmation
+      = user.password_field :password_confirmation
+
+  .field
+    = f.label "Account Name *"
+    = f.text_field :name
+ 
+  .field
+    = f.label :description
+    = f.text_area :description
+
+
+
+
+  .actions
+    = f.submit

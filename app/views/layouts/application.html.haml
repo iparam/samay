@@ -1,0 +1,51 @@
+!!!
+%html
+  %head
+    %title Samay
+    = stylesheet_link_tag    "application" 
+    = javascript_include_tag "application" 
+    = csrf_meta_tags
+%body
+  %div{:class=>"container_16 every-thing"}
+    .wrapper
+      .header
+        %div{:class=>"top-header grid_16"}
+          .grid_8
+          .top_right_bar 
+            -if user_signed_in?
+              You are login as, 
+              = current_user.name.capitalize
+              | 
+              =link_to "Logout", logout_path, :method => "delete"
+              
+            -elsif @account_subdomain.present?
+              =link_to "Login", login_path
+            - else  
+              =link_to "Sign Up", new_account_path
+        .clear
+        .menu-header
+          -if user_signed_in?
+            .menu-bar
+              %ul{:class=>"menu-bar-list"}
+                %li 
+                  %a{:href=>""} Time Sheet
+                %li
+                  %a{:href=>""} Dashboard
+                %li{:class=>"selected"}
+                  %a{:href=>""}Project
+                %li
+                  %a{:href=>""}Project
+        -if user_signed_in?  
+          .sub-menu-bar 
+            %ul
+              %li
+                %a{:href=>""}Sub menu
+              %li{:class=>"active"}
+                %a{:href=>""}Sub menu1
+              %li
+                %a{:href=>""}Sub menu2  
+      .clear
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)  
+      =yield
+
